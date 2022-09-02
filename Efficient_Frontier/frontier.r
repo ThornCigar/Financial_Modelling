@@ -58,9 +58,9 @@ for (i in seq(1,1000)) {
   A3 = cbind(t(rep(1,n)), 0, 0)
   A = rbind(A1, A2, A3)
   b = c(rep(0,n), target, 1)
-  x = solve(A)%*%b
+  x = solve(A) %*% b
   print(sum(x[1:n]))
-  var = t(x[1:n])%*%return_cov%*%x[1:n]
+  var = t(x[1:n]) %*% return_cov %*% x[1:n]
   store[i, 1:n] = x[1:n]
   store[i, n + 1] = target
   store[i, n + 2] = sqrt(var)
