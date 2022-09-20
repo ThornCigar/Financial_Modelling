@@ -9,7 +9,7 @@ A verification of the two fund theorem is also provided.
 - [ ] Data wrangling
 - [ ] Extract price (mid-day, close?) into matrix/dataframe
 - [ ] Mean and covariance matrix for log return
-- [ ] **Additional functionality, dynamic frontier, dynamic return and volatility, refer to "Additional**
+- [ ] **Additional functionality, dynamic frontier, dynamic return and volatility, refer to "Additional"**
 - [ ] Mean variance optimisation for efficient frontier
 - [ ] Optimisation for capital allocation line, cash as risk-free/included in MVO process
 - [ ] Verification of Two Fund Theorem
