@@ -1,3 +1,8 @@
+# Copyright (C) 2022 ThornCigar, All Rights Reserved.
+#
+# https://github.com/ThornCigar
+#
+
 # Set up and get the csv file
 # Note that "dplyr" package is used
 # install.packages("dplyr)
