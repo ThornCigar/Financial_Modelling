@@ -9,7 +9,6 @@ Then, restore development environment by running `renv::restore()`.
 
 ## Developing the project
 - This project leverages `renv`, which enables project-wide dependency management. Using it ensures development environment consistency and allows quick rollback of environments. Refer to the renv [introductory documentation](https://rstudio.github.io/renv/articles/renv.html) for more.
-- Don't forget to format code often! (Tip: `Ctrl-A` to select all, and then `Ctrl-Shift-A` to reformat selected code)
 
 # To-Do List
 ## Port to python

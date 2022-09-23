@@ -36,9 +36,9 @@ normalise_data = function(data) {
   return(data)
 }
 
-data = normalise_data(data)
 
-data_dim = count(data, Name)
+data = normalise_data(data)
+data_dim = count(data, Name) # unreliable stock name order
 data_col_count = nrow(data_dim)
 data_row_count = data_dim[1, 'n']
 
@@ -61,10 +61,8 @@ get_return_matrix = function(price_mat) {
   return(return_mat)
 }
 
+
 return_mat = get_return_matrix(price_mat)
-
-
-# Get mean and covariance matrix of return
 return_mean = colMeans(return_mat)
 return_cov = cov(return_mat)
 
