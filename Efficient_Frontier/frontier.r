@@ -5,19 +5,35 @@
 
 library(dplyr)
 
-# Set up and get the csv file
-# rm(list = ls())
-file = read.csv("all_stocks_5yr.csv")
-data = data.frame(file)
+
+# Clear the environment
+rm(list = ls())
 
 
-# Clean data, here I drop all stock with less than 1259 valid observations
-data$mid = (data$open + data$close) / 2
-count = count(data, Name)
-count = count[count$n != 1259, ]
-data = subset(data,!Name %in% count$Name)
+# Import data
+data = read.csv("all_stocks_5yr.csv")
+
+
+# Normalise data
+## Remove data with inconsistent amount
+data_count = count(data, Name)
+data_count_count = count(count(data, Name), n)
+data_count_target = data_count_count[order(-data_count_count$nn), ][1, "n"]
+purge_list = data_count[data_count$n != data_count_target, ]
+data = subset(data, !Name %in% purge_list$Name)
+
+## Remove data with N/A entries
 na_col = unique(which(is.na(data), arr.ind = TRUE)[, 1])
-data = data[!data$Name %in% data[na_col,]$Name,]
+data = data[!data$Name %in% data[na_col, ]$Name, ]
+
+## Add mid row
+data$mid = (data$open + data$close) / 2
+
+rm(data_count,
+   data_count_count,
+   data_count_target,
+   purge_list,
+   na_col)
 
 
 # Extract estimated mid-day price (open plus close divided by 2) into matrix
@@ -27,12 +43,12 @@ col = 0
 i = 1
 current = ""
 while (i <= nrow(data)) {
-  if (data[i,]$Name != current) {
-    current = data[i,]$Name
+  if (data[i, ]$Name != current) {
+    current = data[i, ]$Name
     row = 1
     col = col + 1
   }
-  price[row, col] = data[i,]$mid
+  price[row, col] = data[i, ]$mid
   row = row + 1
   i = i + 1
 }
@@ -63,7 +79,7 @@ for (i in seq(1, 1000)) {
   A = rbind(A1, A2, A3)
   b = c(rep(0, n), target, 1)
   x = solve(A) %*% b
-  print(sum(x[1:n]))
+  # print(sum(x[1:n]))
   var = t(x[1:n]) %*% return_cov %*% x[1:n]
   store[i, 1:n] = x[1:n]
   store[i, n + 1] = target
@@ -76,8 +92,8 @@ plot(store[, n + 2], store[, n + 1], xlab = "SD", ylab = "Return")
 
 
 # Testing linear combination of efficient portfolios
-portfolio_1 = store[100,]
-portfolio_2 = store[nrow(store) - 100,]
+portfolio_1 = store[100, ]
+portfolio_2 = store[nrow(store) - 100, ]
 store2 = matrix(nrow = 10001, ncol = 2)
 j = 1
 for (i in seq(0, 1, 0.0001)) {
