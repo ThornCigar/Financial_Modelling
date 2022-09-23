@@ -2,6 +2,8 @@
 R code for calculating the efficient frontier, sample data set used is taken from https://github.com/CNuge/kaggle-code/tree/master/stock_data
 A verification of the two fund theorem is also provided.
 
+## Developing the project
+This project leverages `renv`, which enables project-wide dependency management. Using it ensures development environment consistency and allows quick rollback of environments. Refer to the renv [introductory documentation](https://rstudio.github.io/renv/articles/renv.html) for more.
 
 # To-Do List
 ## Port to python
@@ -24,4 +26,3 @@ A verification of the two fund theorem is also provided.
 
 ## General
 - [ ] Learn to use version control god god god stop uploading manually
-
