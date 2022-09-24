@@ -2,6 +2,8 @@
 R code for calculating the efficient frontier, sample data set used is taken from https://github.com/CNuge/kaggle-code/tree/master/stock_data
 A verification of the two fund theorem is also provided.
 
+# Special thanks to DragonXi for their contribution.
+
 ## Getting started
 On cloning the repository, simply open `Efficient_Frontier.Rproj` in RStudio.
 
