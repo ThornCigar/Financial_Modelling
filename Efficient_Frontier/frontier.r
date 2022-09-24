@@ -67,25 +67,29 @@ return_mean = colMeans(return_mat)
 return_cov = cov(return_mat)
 
 
+
+A1 = cbind(return_cov, return_mean, rep(1, data_col_count))
+A2 = cbind(t(return_mean), 0, 0)
+A3 = cbind(t(rep(1, data_col_count)), 0, 0)
+A = rbind(A1, A2, A3)
+A_inv = solve(A)
+rm(A1, A2, A3)
+
+
 # Calculate minimum variance portfolio for each return
 # Formula is derived by solving the matrix form Lagrangian
 store = matrix(nrow = 1000, ncol = data_col_count + 2)
 # colnames(store) = c("Weight 1", "Return", "SD")
 for (i in seq(1, 1000)) {
   target = 0.0001 + (i - 1) * 0.00001
-  A1 = cbind(return_cov, return_mean, rep(1, data_col_count))
-  A2 = cbind(t(return_mean), 0, 0)
-  A3 = cbind(t(rep(1, data_col_count)), 0, 0)
-  A = rbind(A1, A2, A3)
   b = c(rep(0, data_col_count), target, 1)
-  x = solve(A) %*% b
+  x = A_inv %*% b
   # print(sum(x[1:data_col_count]))
   var = t(x[1:data_col_count]) %*% return_cov %*% x[1:data_col_count]
   store[i, 1:data_col_count] = x[1:data_col_count]
   store[i, data_col_count + 1] = target
   store[i, data_col_count + 2] = sqrt(var)
 }
-
 
 # Plot
 plot(store[, data_col_count + 2], store[, data_col_count + 1], xlab = "SD", ylab = "Return")
@@ -103,6 +107,7 @@ for (i in seq(0, 1, 0.0001)) {
   store2[j, 2] = sqrt(var)
   j = j + 1
 }
+
 plot(store2[, 2],
      store2[, 1],
      xlab = "SD",
