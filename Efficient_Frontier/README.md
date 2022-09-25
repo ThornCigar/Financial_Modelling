@@ -15,6 +15,8 @@ Then, restore development environment by running `renv::restore()`.
 # To-Do List
 ## R code
 - [ ] Resolve ingularity issues for small sliding windows
+- [ ] Allow for storage of date and stock names in calculated efficient portfolios arrays
+- [ ] Suitable 3D plot for sliding window frontiers with date, weights, etc.
 
 ## Port to python
 - [ ] CSV to python, preserving column names, dataframe or numpy?
