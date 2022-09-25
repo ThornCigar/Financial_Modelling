@@ -48,10 +48,10 @@ get_return_matrix = function(price_mat) {
 }
 
 
-# portfolios(return) -> store
+# frontier(return) -> store
 #
-# Use return matrix to calculate efficient portfolios, store weights, return and sd
-portfolios = function(return){
+# Use return matrix to calculate efficient frontier, store weights, return and sd
+frontier = function(return){
   return_mean = colMeans(return)
   return_cov = cov(return)
   n = length(return_mean)
@@ -91,8 +91,8 @@ price_mat = matrix(data[["mid"]], nrow = data_row_count)
 return_mat = get_return_matrix(price_mat)
 
 
-# Calculate portfolios and plot
-store = portfolios(return_mat)
+# Calculate frontier and plot
+store = frontier(return_mat)
 plot(store[, data_col_count + 2], store[, data_col_count + 1], xlab = "SD", ylab = "Return")
 
 
@@ -104,7 +104,7 @@ sliding = function(return, window=502, expand=FALSE){
   store = array(dim=c(1000,n + 2, nrow(return) - window + 1))
   for (t in seq(1, nrow(return) - window + 1)) {
     return_slice = return[t:(t + window - 1), ]
-    store[,,t] = portfolios(return_slice)
+    store[,,t] = frontier(return_slice)
   }
   return(store)
 }
