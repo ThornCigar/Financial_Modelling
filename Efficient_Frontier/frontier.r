@@ -5,7 +5,7 @@
 # Special thanks to DragonXi for their contribution.
 
 
-library(dplyr) 
+library(dplyr)
 rm(list = ls()) # Clear the environment
 data = read.csv("all_stocks_5yr.csv") # Import data
 
@@ -21,14 +21,14 @@ normalise_data = function(data) {
   data_count_target = data_count_count[order(-data_count_count$nn), ][1, "n"]
   purge_list = data_count[data_count$n != data_count_target, ]
   data = subset(data, !Name %in% purge_list$Name)
-  
+
   ## Remove data with N/A entries
   na_row = unique(which(is.na(data), arr.ind = TRUE)[, 1])
   data = data[!data$Name %in% data[na_row, ]$Name, ]
-  
+
   ## Add "mid" column
   data$mid = (data$open + data$close) / 2
-  
+
   return(data)
 }
 
@@ -61,7 +61,7 @@ frontier = function(return){
   A = rbind(A1, A2, A3)
   A_inv = solve(A)
   rm(A1, A2, A3)
-  
+
   # Calculate minimum variance portfolio for each return
   # Formula is derived by solving the matrix form Lagrangian
   store = matrix(nrow = 1000, ncol = n + 2)
@@ -110,7 +110,7 @@ sliding = function(return, window=502, expand=FALSE){
 }
 
 
-test = sliding(return_mat)
+# test = sliding(return_mat)
 
 
 ## This part need to be re-written, but with very low priority
@@ -126,7 +126,7 @@ test = sliding(return_mat)
 #   store2[j, 2] = sqrt(var)
 #   j = j + 1
 # }
-# 
+#
 # plot(store2[, 2],
 #      store2[, 1],
 #      xlab = "SD",
